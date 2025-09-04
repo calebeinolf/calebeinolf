@@ -152,7 +152,7 @@ export default function App() {
           <div className="opacity-0 animate-title-fade-in-slide-up">
             <h1
               ref={textRef}
-              className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black tracking-tighter transition-transform duration-500 ease-out bg-clip-text text-transparent"
+              className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-semibold tracking-tighter transition-transform duration-500 ease-out bg-clip-text text-transparent"
               style={{
                 ...mainTextTransform,
                 backgroundImage: `radial-gradient(circle 1000px at var(--mouse-x, 50%) var(--mouse-y, 50%), ${colors.text1} 0%, ${colors.text2} 50%, ${colors.text3} 100%)`,
