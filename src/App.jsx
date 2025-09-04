@@ -37,7 +37,10 @@ const CustomStyles = () => (
 
 // Main App Component
 export default function App() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
   const [hasMouseMoved, setHasMouseMoved] = useState(false);
   const textRef = useRef(null);
   const [colors, setColors] = useState({
@@ -78,7 +81,7 @@ export default function App() {
     let animationFrameId;
     const animateColors = () => {
       const time = Date.now() / 8000; // Slower, more graceful transition
-      const t = (Math.sin(time) + 1) / 2; // t smoothly oscillates between 0 and 1
+      const t = (-Math.sin(time) + 1) / 2; // Inverted sine wave to start on green
 
       // Define start (green/blue) and end (purple/pink) hues
       const startHues = { glow: 140, t1: 140, t2: 160, t3: 180 };
