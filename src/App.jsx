@@ -38,6 +38,7 @@ const CustomStyles = () => (
 // Main App Component
 export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hasMouseMoved, setHasMouseMoved] = useState(false);
   const textRef = useRef(null);
   const [colors, setColors] = useState({
     glow: "rgba(20, 184, 166, 0.15)",
@@ -49,6 +50,10 @@ export default function App() {
   // Effect for mouse tracking
   useEffect(() => {
     const handleMouseMove = (event) => {
+      if (!hasMouseMoved) {
+        setHasMouseMoved(true);
+        document.body.style.cursor = "none";
+      }
       setMousePosition({ x: event.clientX, y: event.clientY });
 
       if (textRef.current) {
@@ -64,8 +69,9 @@ export default function App() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.body.style.cursor = "auto";
     };
-  }, []);
+  }, [hasMouseMoved]);
 
   // Effect for animating colors
   useEffect(() => {
@@ -75,7 +81,7 @@ export default function App() {
       const t = (Math.sin(time) + 1) / 2; // t smoothly oscillates between 0 and 1
 
       // Define start (green/blue) and end (purple/pink) hues
-      const startHues = { glow: 170, t1: 170, t2: 190, t3: 210 };
+      const startHues = { glow: 140, t1: 140, t2: 160, t3: 180 };
       const endHues = { glow: 290, t1: 290, t2: 320, t3: 300 };
 
       // Linear interpolation function
@@ -106,13 +112,11 @@ export default function App() {
     };
   }, []);
 
-  // Calculate parallax offsets
-  const parallaxX =
-    typeof window !== "undefined" ? mousePosition.x - window.innerWidth / 2 : 0;
-  const parallaxY =
-    typeof window !== "undefined"
-      ? mousePosition.y - window.innerHeight / 2
-      : 0;
+  // Calculate parallax offsets - only apply if mouse has moved
+  const parallaxX = hasMouseMoved ? mousePosition.x - window.innerWidth / 2 : 0;
+  const parallaxY = hasMouseMoved
+    ? mousePosition.y - window.innerHeight / 2
+    : 0;
 
   // Define transform styles for the parallax effect
   const mainTextTransform = {
@@ -131,7 +135,9 @@ export default function App() {
       >
         {/* Custom Mouse Cursor */}
         <div
-          className="pointer-events-none fixed z-50 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_5px_rgba(255,255,255,0.3)] transition-transform duration-100 ease-out"
+          className={`pointer-events-none fixed z-50 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_5px_rgba(255,255,255,0.3)] transition-opacity duration-300 ease-out ${
+            hasMouseMoved ? "opacity-100" : "opacity-0"
+          }`}
           style={{
             left: `${mousePosition.x}px`,
             top: `${mousePosition.y}px`,
@@ -152,7 +158,7 @@ export default function App() {
           <div className="opacity-0 animate-title-fade-in-slide-up">
             <h1
               ref={textRef}
-              className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-semibold tracking-tighter transition-transform duration-500 ease-out bg-clip-text text-transparent"
+              className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-semibold tracking-tighter transition-transform duration-500 ease-out bg-clip-text text-transparent"
               style={{
                 ...mainTextTransform,
                 backgroundImage: `radial-gradient(circle 1000px at var(--mouse-x, 50%) var(--mouse-y, 50%), ${colors.text1} 0%, ${colors.text2} 50%, ${colors.text3} 100%)`,
