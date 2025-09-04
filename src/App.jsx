@@ -6,7 +6,7 @@ const CustomStyles = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Inter');
 
-    html, body {
+    .custom-cursor-active {
       cursor: none;
     }
 
@@ -55,7 +55,6 @@ export default function App() {
     const handleMouseMove = (event) => {
       if (!hasMouseMoved) {
         setHasMouseMoved(true);
-        document.body.style.cursor = "none";
       }
       setMousePosition({ x: event.clientX, y: event.clientY });
 
@@ -72,7 +71,17 @@ export default function App() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      document.body.style.cursor = "auto";
+    };
+  }, [hasMouseMoved]);
+
+  // Effect to toggle body class for custom cursor
+  useEffect(() => {
+    if (hasMouseMoved) {
+      document.body.classList.add("custom-cursor-active");
+    }
+    // Cleanup function to remove the class when the component unmounts
+    return () => {
+      document.body.classList.remove("custom-cursor-active");
     };
   }, [hasMouseMoved]);
 
