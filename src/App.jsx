@@ -142,7 +142,7 @@ export default function App() {
     <>
       <CustomStyles />
       <div
-        className="bg-slate-900 min-h-screen flex items-center justify-center text-white overflow-hidden relative"
+        className="bg-gray-950 min-h-screen flex items-center justify-center text-white overflow-hidden relative"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         {/* Custom Mouse Cursor */}
