@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import useHasFinePointer from "./useHasFinePointer";
 
 // It's common to define animations or custom styles that Tailwind can't generate
 // directly in a style tag when working in a single file component like this.
@@ -37,6 +38,7 @@ const CustomStyles = () => (
 
 // Main App Component
 export default function App() {
+  const hasFinePointer = useHasFinePointer();
   const [mousePosition, setMousePosition] = useState({
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
@@ -52,6 +54,8 @@ export default function App() {
 
   // Effect for mouse tracking
   useEffect(() => {
+    if (!hasFinePointer) return;
+
     const handleMouseMove = (event) => {
       if (!hasMouseMoved) {
         setHasMouseMoved(true);
@@ -72,18 +76,18 @@ export default function App() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [hasMouseMoved]);
+  }, [hasMouseMoved, hasFinePointer]);
 
   // Effect to toggle body class for custom cursor
   useEffect(() => {
-    if (hasMouseMoved) {
+    if (hasMouseMoved && hasFinePointer) {
       document.body.classList.add("custom-cursor-active");
     }
     // Cleanup function to remove the class when the component unmounts
     return () => {
       document.body.classList.remove("custom-cursor-active");
     };
-  }, [hasMouseMoved]);
+  }, [hasMouseMoved, hasFinePointer]);
 
   // Effect for animating colors
   useEffect(() => {
@@ -138,6 +142,8 @@ export default function App() {
     transform: `translate(${parallaxX / 25}px, ${parallaxY / 25}px)`,
   };
 
+  const glowTransparency = hasFinePointer ? 80 : 60;
+
   return (
     <>
       <CustomStyles />
@@ -146,25 +152,25 @@ export default function App() {
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         {/* Custom Mouse Cursor */}
-        <div
-          className={`pointer-events-none fixed z-50 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_5px_rgba(255,255,255,0.3)] transition-opacity duration-300 ease-out ${
-            hasMouseMoved ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            left: `${mousePosition.x}px`,
-            top: `${mousePosition.y}px`,
-            transform: "translate(-50%, -50%)",
-          }}
-        ></div>
-
+        {hasFinePointer && (
+          <div
+            className={`pointer-events-none fixed z-50 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_5px_rgba(255,255,255,0.3)] transition-opacity duration-300 ease-out ${
+              hasMouseMoved ? "opacity-100" : "opacity-0"
+            }`}
+            style={{
+              left: `${mousePosition.x}px`,
+              top: `${mousePosition.y}px`,
+              transform: "translate(-50%, -50%)",
+            }}
+          ></div>
+        )}
         {/* Mouse follower glow effect */}
         <div
           className="pointer-events-none fixed inset-0 z-20 transition-colors duration-1000 ease-linear"
           style={{
-            background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${colors.glow}, transparent 80%)`,
+            background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${colors.glow}, transparent ${glowTransparency}%)`,
           }}
-        ></div>
-
+        ></div>{" "}
         <div className="relative z-10 text-center p-4">
           {/* Main Name with dynamic gradient and parallax effect */}
           <div className="opacity-0 animate-title-fade-in-slide-up">
@@ -186,17 +192,17 @@ export default function App() {
             style={subTextTransform}
           >
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-1">
-              <p className="text-slate-300 text-sm md:text-base tracking-wider">
+              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
                 ui/ux design
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-2">
-              <p className="text-slate-300 text-sm md:text-base tracking-wider">
+              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
                 web development
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-3">
-              <p className="text-slate-300 text-sm md:text-base tracking-wider">
+              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
                 programming
               </p>
             </div>
