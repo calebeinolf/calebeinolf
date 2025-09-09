@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import useHasFinePointer from "./useHasFinePointer";
-import { Github } from "lucide-react";
 
 // It's common to define animations or custom styles that Tailwind can't generate
 // directly in a style tag when working in a single file component like this.
@@ -237,6 +236,8 @@ export default function App() {
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex ">
           <a
             href="https://github.com/calebeinolf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
@@ -258,6 +259,8 @@ export default function App() {
           </a>
           <a
             href="https://www.linkedin.com/in/calebeinolf/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
@@ -276,6 +279,8 @@ export default function App() {
           </a>
           <a
             href="https://sites.google.com/view/calebeinolf-art/home"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
