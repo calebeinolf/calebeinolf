@@ -236,7 +236,7 @@ export default function App() {
         {/* Links */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex ">
           <a
-            href="#"
+            href="https://github.com/calebeinolf"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
@@ -257,7 +257,7 @@ export default function App() {
             GitHub
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/calebeinolf/"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
@@ -275,7 +275,7 @@ export default function App() {
             LinkedIn
           </a>
           <a
-            href="#"
+            href="https://sites.google.com/view/calebeinolf-art/home"
             className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
             <svg
