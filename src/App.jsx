@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import useHasFinePointer from "./useHasFinePointer";
 import CalebeinolfLogo from "./CalebeinolfLogo";
+import DinoGame from "./DinoGame";
 
 // It's common to define animations or custom styles that Tailwind can't generate
 // directly in a style tag when working in a single file component like this.
@@ -46,6 +47,7 @@ export default function App() {
   });
   const [hasMouseMoved, setHasMouseMoved] = useState(false);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
+  const [showDinoGame, setShowDinoGame] = useState(false);
   const textRef = useRef(null);
   const [colors, setColors] = useState({
     glow: "rgba(20, 184, 166, 0.15)",
@@ -53,6 +55,19 @@ export default function App() {
     text2: "#2dd4bf",
     text3: "#60a5fa",
   });
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === "Space" && !showDinoGame) {
+        e.preventDefault();
+        setShowDinoGame(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showDinoGame]);
 
   // Effect for mouse tracking
   useEffect(() => {
@@ -189,37 +204,43 @@ export default function App() {
         ></div>{" "}
         {/* Main Content */}
         <div className="relative z-10 text-center p-4 mb-8">
-          {/* Main Name with dynamic gradient and parallax effect */}
-          <div className="opacity-0 animate-title-fade-in-slide-up">
-            <CalebeinolfLogo
-              textRef={textRef}
-              colors={colors}
-              style={mainTextTransform}
-              mousePosition={mousePosition}
-            />
-          </div>
+          {showDinoGame ? (
+            <DinoGame onClose={() => setShowDinoGame(false)} />
+          ) : (
+            <>
+              {/* Main Name with dynamic gradient and parallax effect */}
+              <div className="opacity-0 animate-title-fade-in-slide-up">
+                <CalebeinolfLogo
+                  textRef={textRef}
+                  colors={colors}
+                  style={mainTextTransform}
+                  mousePosition={mousePosition}
+                />
+              </div>
 
-          {/* Subtext Fields with parallax effect */}
-          <div
-            className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-11 transition-transform duration-500 ease-out"
-            style={subTextTransform}
-          >
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-1">
-              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
-                ui/ux design
-              </p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-2">
-              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
-                web development
-              </p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-3">
-              <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
-                programming
-              </p>
-            </div>
-          </div>
+              {/* Subtext Fields with parallax effect */}
+              <div
+                className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-11 transition-transform duration-500 ease-out"
+                style={subTextTransform}
+              >
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-1">
+                  <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
+                    ui/ux design
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-2">
+                  <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
+                    web development
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-3">
+                  <p className="select-none text-slate-300 text-sm md:text-base tracking-wider">
+                    programming
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         {/* Links */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex">
