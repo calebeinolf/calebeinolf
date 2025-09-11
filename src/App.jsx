@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import useHasFinePointer from "./useHasFinePointer";
+import CalebeinolfLogo from "./CalebeinolfLogo";
 
 // It's common to define animations or custom styles that Tailwind can't generate
 // directly in a style tag when working in a single file component like this.
@@ -62,14 +63,6 @@ export default function App() {
         setHasMouseMoved(true);
       }
       setMousePosition({ x: event.clientX, y: event.clientY });
-
-      if (textRef.current) {
-        const rect = textRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        textRef.current.style.setProperty("--mouse-x", `${x}px`);
-        textRef.current.style.setProperty("--mouse-y", `${y}px`);
-      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -168,7 +161,7 @@ export default function App() {
     <>
       <CustomStyles />
       <div
-        className="bg-gray-950 min-h-screen flex items-center justify-center text-white overflow-hidden relative"
+        className="bg-zinc-950 min-h-screen flex items-center justify-center text-white overflow-hidden relative"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         {/* Custom Mouse Cursor */}
@@ -198,21 +191,17 @@ export default function App() {
         <div className="relative z-10 text-center p-4 mb-8">
           {/* Main Name with dynamic gradient and parallax effect */}
           <div className="opacity-0 animate-title-fade-in-slide-up">
-            <h1
-              ref={textRef}
-              className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-semibold tracking-tighter transition-transform duration-500 ease-out bg-clip-text text-transparent"
-              style={{
-                ...mainTextTransform,
-                backgroundImage: `radial-gradient(circle 1000px at var(--mouse-x, 50%) var(--mouse-y, 50%), ${colors.text1} 0%, ${colors.text2} 50%, ${colors.text3} 100%)`,
-              }}
-            >
-              calebeinolf
-            </h1>
+            <CalebeinolfLogo
+              textRef={textRef}
+              colors={colors}
+              style={mainTextTransform}
+              mousePosition={mousePosition}
+            />
           </div>
 
           {/* Subtext Fields with parallax effect */}
           <div
-            className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-8 transition-transform duration-500 ease-out"
+            className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-11 transition-transform duration-500 ease-out"
             style={subTextTransform}
           >
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-1">
@@ -233,17 +222,17 @@ export default function App() {
           </div>
         </div>
         {/* Links */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex ">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex">
           <a
             href="https://github.com/calebeinolf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
+            className="flex px-5 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 hover:scale-[1.05] transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="24"
+              height="24"
               viewBox="0 0 1024 1024"
               fill="none"
             >
@@ -255,18 +244,18 @@ export default function App() {
                 fill="#ffffff"
               />
             </svg>
-            GitHub
+            <div className="text-lg hidden sm:flex">GitHub</div>
           </a>
           <a
             href="https://www.linkedin.com/in/calebeinolf/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
+            className="flex px-5 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 hover:scale-[1.05] transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="19"
-              width="19"
+              height="23"
+              width="23"
               viewBox="0 0 72 72"
               fill="#fff"
             >
@@ -275,19 +264,19 @@ export default function App() {
                 d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z M62,62 L51.315625,62 L51.315625,43.8021149 C51.315625,38.8127542 49.4197917,36.0245323 45.4707031,36.0245323 C41.1746094,36.0245323 38.9300781,38.9261103 38.9300781,43.8021149 L38.9300781,62 L28.6333333,62 L28.6333333,27.3333333 L38.9300781,27.3333333 L38.9300781,32.0029283 C38.9300781,32.0029283 42.0260417,26.2742151 49.3825521,26.2742151 C56.7356771,26.2742151 62,30.7644705 62,40.051212 L62,62 Z M16.349349,22.7940133 C12.8420573,22.7940133 10,19.9296567 10,16.3970067 C10,12.8643566 12.8420573,10 16.349349,10 C19.8566406,10 22.6970052,12.8643566 22.6970052,16.3970067 C22.6970052,19.9296567 19.8566406,22.7940133 16.349349,22.7940133 Z M11.0325521,62 L21.769401,62 L21.769401,27.3333333 L11.0325521,27.3333333 L11.0325521,62 Z"
               />
             </svg>
-            LinkedIn
+            <div className="text-lg hidden sm:flex">LinkedIn</div>
           </a>
           <a
             href="https://sites.google.com/view/calebeinolf-art/home"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-4 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 transition-opacity duration-300"
+            className="flex px-5 py-1 items-center justify-center gap-3 opacity-70 hover:opacity-100 hover:scale-[1.05] transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               version="1.0"
-              width="25"
-              height="25"
+              width="29"
+              height="29"
               viewBox="0 0 1280 1280"
             >
               <g
@@ -298,7 +287,7 @@ export default function App() {
                 <path d="M6135 11194 c-1192 -76 -2249 -543 -3088 -1364 -762 -745 -1247 -1695 -1396 -2737 -38 -261 -46 -384 -45 -698 0 -443 38 -760 139 -1165 89 -351 181 -602 350 -945 185 -376 364 -652 636 -980 118 -143 461 -481 616 -608 711 -581 1539 -940 2440 -1057 312 -41 690 -50 798 -20 182 51 328 143 434 275 130 161 191 350 177 555 -12 197 -68 325 -219 505 -67 80 -137 216 -163 320 -25 96 -25 285 0 380 63 243 225 437 449 540 149 68 141 67 887 75 371 4 686 10 700 13 14 4 70 13 125 22 536 84 1050 351 1447 752 324 327 539 688 672 1133 108 360 133 810 70 1265 -186 1335 -1066 2512 -2379 3180 -582 296 -1185 471 -1865 540 -147 15 -654 27 -785 19z m-840 -1094 c272 -86 474 -296 547 -568 28 -109 28 -287 -1 -397 -74 -281 -295 -502 -576 -576 -114 -30 -280 -30 -394 0 -277 73 -484 271 -571 546 -28 90 -38 267 -20 368 54 313 301 570 614 642 94 22 312 14 401 -15z m2603 15 c315 -66 567 -325 622 -642 18 -101 8 -278 -20 -368 -87 -275 -294 -473 -571 -546 -114 -30 -280 -30 -394 0 -281 74 -502 295 -576 576 -30 112 -30 289 0 399 79 297 323 527 622 585 71 14 242 12 317 -4z m-4308 -2126 c177 -28 313 -100 445 -233 133 -134 200 -272 225 -464 32 -245 -61 -496 -247 -673 -98 -94 -201 -151 -340 -191 -102 -29 -304 -31 -403 -4 -362 99 -600 408 -600 775 0 165 42 311 127 439 175 263 486 401 793 351z m5958 -19 c348 -98 582 -408 582 -770 0 -165 -39 -297 -126 -433 -250 -387 -770 -483 -1146 -210 -122 88 -238 250 -286 399 -88 271 -20 577 175 785 123 130 271 213 438 245 96 19 269 11 363 -16z" />
               </g>
             </svg>
-            Design
+            <div className="text-lg hidden sm:flex">Design</div>
           </a>
         </div>
       </div>
