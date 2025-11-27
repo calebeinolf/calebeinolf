@@ -216,6 +216,35 @@ export default function App() {
             style={subTextTransform}
           >
             <a
+              href="https://calebeinolf.com/design"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/30 transition-all duration-300 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-3"
+            >
+              <div className="flex items-center justify-center gap-3 opacity-70 group-hover:opacity-100 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="19"
+                  viewBox="0 0 116 53"
+                  fill="none"
+                >
+                  <path
+                    d="M57.9998 1.95056C44.7142 1.95056 33.9426 12.722 33.9426 26.0075C33.9426 39.2931 44.7142 50.0645 57.9998 50.0645C71.2854 50.0645 82.057 39.2931 82.057 26.0075C82.057 12.722 71.2854 1.95056 57.9998 1.95056ZM66.4198 26.0075C61.7709 26.0075 57.9998 22.2364 57.9998 17.5876C57.9998 12.9387 61.7709 9.16766 66.4198 9.16766C71.0687 9.16766 74.8398 12.9387 74.8398 17.5876C74.8398 22.2364 71.0687 26.0075 66.4198 26.0075Z"
+                    fill="#fff"
+                  />
+                  <path
+                    d="M4.75996 37.5014L19.2737 52.0151H35.8934L9.88565 26.0075L35.8934 0H19.2737L4.75996 14.5137C-1.58665 20.8602 -1.58665 31.1549 4.75996 37.5014Z"
+                    fill="#fff"
+                  />
+                  <path
+                    d="M111.24 37.5014L96.7264 52.0151H80.1067L106.114 26.0075L80.1067 0H96.7264L111.24 14.5137C117.587 20.8602 117.587 31.1549 111.24 37.5014Z"
+                    fill="#fff"
+                  />
+                </svg>
+                Portfolio
+              </div>
+            </a>
+            <a
               href="https://github.com/calebeinolf"
               target="_blank"
               rel="noopener noreferrer"
@@ -260,35 +289,6 @@ export default function App() {
                   />
                 </svg>
                 LinkedIn
-              </div>
-            </a>
-            <a
-              href="https://calebeinolf.com/design"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/30 transition-all duration-300 rounded-full px-5 py-2 shadow-lg opacity-0 animate-fade-in-slide-up-3"
-            >
-              <div className="flex items-center justify-center gap-3 opacity-70 group-hover:opacity-100 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="19"
-                  viewBox="0 0 116 53"
-                  fill="none"
-                >
-                  <path
-                    d="M57.9998 1.95056C44.7142 1.95056 33.9426 12.722 33.9426 26.0075C33.9426 39.2931 44.7142 50.0645 57.9998 50.0645C71.2854 50.0645 82.057 39.2931 82.057 26.0075C82.057 12.722 71.2854 1.95056 57.9998 1.95056ZM66.4198 26.0075C61.7709 26.0075 57.9998 22.2364 57.9998 17.5876C57.9998 12.9387 61.7709 9.16766 66.4198 9.16766C71.0687 9.16766 74.8398 12.9387 74.8398 17.5876C74.8398 22.2364 71.0687 26.0075 66.4198 26.0075Z"
-                    fill="#fff"
-                  />
-                  <path
-                    d="M4.75996 37.5014L19.2737 52.0151H35.8934L9.88565 26.0075L35.8934 0H19.2737L4.75996 14.5137C-1.58665 20.8602 -1.58665 31.1549 4.75996 37.5014Z"
-                    fill="#fff"
-                  />
-                  <path
-                    d="M111.24 37.5014L96.7264 52.0151H80.1067L106.114 26.0075L80.1067 0H96.7264L111.24 14.5137C117.587 20.8602 117.587 31.1549 111.24 37.5014Z"
-                    fill="#fff"
-                  />
-                </svg>
-                Portfolio
               </div>
             </a>
           </div>
