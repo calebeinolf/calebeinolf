@@ -34,6 +34,23 @@ const CustomStyles = () => (
     .animate-fade-in-slide-up-3 {
       animation: fadeInSlideUp 1s ease-out 0.9s forwards;
     }
+
+    /* Dino Game Overlay Styles */
+    .interstitial-wrapper {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 9999 !important;
+      background-color: #f7f7f7 !important;
+      color: #2b2b2b !important;
+      font-size: 1em !important;
+      line-height: 1.55 !important;
+      margin: 0 !important;
+      max-width: none !important;
+      padding-top: 100px !important;
+    }
   `}</style>
 );
 
@@ -53,6 +70,8 @@ export default function App() {
     text2: "#2dd4bf",
     text3: "#60a5fa",
   });
+  const [showGame, setShowGame] = useState(false);
+  const gameContainerRef = useRef(null);
 
   // Effect for mouse tracking
   useEffect(() => {
@@ -101,6 +120,58 @@ export default function App() {
       document.body.classList.remove("custom-cursor-active");
     };
   }, [hasMouseMoved, hasFinePointer]);
+
+  // Effect for spacebar to show game
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code === "Space") {
+        event.preventDefault();
+        setShowGame(true);
+      } else if (event.code === "Escape" && showGame) {
+        event.preventDefault();
+        setShowGame(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showGame]);
+
+  // Effect to load game script when game is shown
+  useEffect(() => {
+    if (showGame && gameContainerRef.current) {
+      // Add offline class to body
+      document.body.classList.add("offline");
+
+      // Load the game script
+      const script = document.createElement("script");
+      script.src = "/t-rex-runner.js";
+      script.onload = () => {
+        // Initialize the game
+        if (window.Runner) {
+          new window.Runner(".interstitial-wrapper");
+        }
+      };
+      document.head.appendChild(script);
+
+      return () => {
+        // Cleanup
+        document.body.classList.remove("offline");
+        if (document.head.contains(script)) {
+          document.head.removeChild(script);
+        }
+        // Reset Runner instance
+        if (window.Runner && window.Runner.instance_) {
+          window.Runner.instance_ = null;
+        }
+      };
+    } else {
+      // Remove offline class when game is hidden
+      document.body.classList.remove("offline");
+    }
+  }, [showGame]);
 
   // Effect for animating colors
   useEffect(() => {
@@ -290,6 +361,26 @@ export default function App() {
             <div className="text-lg hidden sm:flex">Design</div>
           </a>
         </div>
+        {/* Dino Game Container */}
+        {showGame && (
+          <div className="interstitial-wrapper" ref={gameContainerRef}>
+            <div id="main-content">
+              <div className="icon icon-offline" alt=""></div>
+            </div>
+            <div id="offline-resources">
+              <img
+                id="offline-resources-1x"
+                src="/assets/default_100_percent/100-offline-sprite.png"
+                alt=""
+              />
+              <img
+                id="offline-resources-2x"
+                src="/assets/default_200_percent/200-offline-sprite.png"
+                alt=""
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
